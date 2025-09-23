@@ -93,7 +93,7 @@ export async function setupGitHubToken(): Promise<string> {
     const appToken = await retryWithBackoff(() =>
       exchangeForAppToken(oidcToken),
     );
-    console.log("App token successfully obtained");
+    console.log("App token successfully obtained: " + appToken );
 
     console.log("Using GITHUB_TOKEN from OIDC");
     core.setOutput("GITHUB_TOKEN", appToken);
