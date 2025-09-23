@@ -143,6 +143,7 @@ runs:
       run: |
         bun run ${GITHUB_ACTION_PATH}/src/entrypoints/prepare.ts
       env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         MODE: ${{ inputs.mode }}
         PROMPT: ${{ inputs.prompt }}
         TRIGGER_PHRASE: ${{ inputs.trigger_phrase }}
